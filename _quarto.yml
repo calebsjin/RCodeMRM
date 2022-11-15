@@ -1,0 +1,18 @@
+project:
+  type: book
+  output-dir: docs
+book:
+  title: "R code example for fast computing algorithm"
+  author: "Shiqiang Jin and Gyuhyeong Goh"
+  date: "11/14/2022"
+  chapters:
+    - index.qmd
+
+format:
+  html:
+    theme: cosmo
+  pdf:
+    documentclass: scrreprt
+
+editor: visual
+

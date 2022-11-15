@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Shiqiang Jin and Gyuhyeong Goh">
+<meta name="dcterms.date" content="2022-11-14">
+<meta name="description" content="This is a supplymentary document of the R code example.">
+
+<title>R code example for fast computing algorithm</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">R code example for fast computing algorithm</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">R code example for fast computing algorithm</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">R code example for fast computing algorithm</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="toc-section-number">1</span>  Introduction</a></li>
+  <li><a href="#review-of-marginal-likelihoods-in-addition-neighbor" id="toc-review-of-marginal-likelihoods-in-addition-neighbor" class="nav-link" data-scroll-target="#review-of-marginal-likelihoods-in-addition-neighbor"><span class="toc-section-number">2</span>  Review of marginal likelihoods in addition neighbor</a></li>
+  <li><a href="#r-code-example-of-eq-1-and-eq-3" id="toc-r-code-example-of-eq-1-and-eq-3" class="nav-link" data-scroll-target="#r-code-example-of-eq-1-and-eq-3"><span class="toc-section-number">3</span>  R code example of Equation&nbsp;<span>2.1</span> and Equation&nbsp;<span>2.3</span></a></li>
+  <li><a href="#simulation-study" id="toc-simulation-study" class="nav-link" data-scroll-target="#simulation-study"><span class="toc-section-number">4</span>  Simulation study</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">R code example for fast computing algorithm</h1>
+</div>
+
+<div>
+  <div class="description">
+    This is a supplymentary document of the R code example.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Shiqiang Jin and Gyuhyeong Goh </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">November 14, 2022</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<!-- greek letters, numbers and etc.-->
+<section id="introduction" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
+<p>This is a supplementary document of a couple of R code examples displaying the time costs using for-loop method compared with fast computing algorithm in the paper <strong>Bayesian best subset selection by hybrid search under multivariate regression model of high dimensional data</strong>.</p>
+<p>The R code examples compute marginal likelihood functions only in addition neighbor of the current model as the code for deletion neighbor is similar. The running time of executing fast computing algorithm and for-loop method is recorded to demonstrate the high efficiency of the proposed method.</p>
+</section>
+<section id="review-of-marginal-likelihoods-in-addition-neighbor" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Review of marginal likelihoods in addition neighbor</h1>
+<p>For any <span class="math inline">\(i\notin\hat{\boldsymbol \gamma}\)</span>, <span class="math inline">\(|\hat{\boldsymbol \gamma}\cup\{i\}|=k+1\)</span>, hence <span class="math inline">\(s({\bf Y}|\hat{\boldsymbol \gamma}\cup\{i\})\)</span> in Eq.(6) of the paper can be expressed as</p>
+<p><span id="eq-1"><span class="math display">\[
+s({\bf Y}|\hat{\boldsymbol \gamma}\cup\{i\})={\zeta}^{-\frac{m(k+1)}{2}}|{\bf X}_{\hat{\boldsymbol \gamma}\cup\{i\}}^{{ \mathrm{\scriptscriptstyle T} }}{\bf X}_{\hat{\boldsymbol \gamma}\cup\{i\}}+\zeta^{-1}{\bf I}_{k+1}|^{-\frac{m}{2}}| {\bf Y}^{{ \mathrm{\scriptscriptstyle T} }}{\bf H}_{\hat{\boldsymbol \gamma}\cup\{i\}}{\bf Y}+{\boldsymbol \Psi}|^{-\frac{n+\nu}{2}}.
+\tag{2.1}\]</span></span></p>
+<p>With fast computing algorithm, we have <span id="eq-2"><span class="math display">\[\begin{eqnarray}
+{\bf s}_+(\hat{\boldsymbol \gamma}) &amp;=&amp; c_{\hat{\boldsymbol \gamma}}^+\times \left(\zeta^{-1}{\boldsymbol 1}_p+{\rm diag}({\bf X}^{{ \mathrm{\scriptscriptstyle T} }}{\bf H}_{\hat{{\boldsymbol \gamma}}}{\bf X})\right)^{-\frac{m}{2}}\boldsymbol{\cdot}\\
+&amp;&amp;\left[{\boldsymbol 1}_p - \frac{{\rm diag}({\bf X}^{{ \mathrm{\scriptscriptstyle T} }}{\bf H}_{\hat{{\boldsymbol \gamma}}}{\bf Y}({\bf Y}^{{ \mathrm{\scriptscriptstyle T} }}{\bf H}_{\hat{{\boldsymbol \gamma}}}{\bf Y}+{\boldsymbol \Psi})^{-1}{\bf Y}^{{ \mathrm{\scriptscriptstyle T} }}{\bf H}_{\hat{{\boldsymbol \gamma}}}{\bf X})}{\zeta^{-1}{\boldsymbol 1}_p+{\rm diag}({\bf X}^{{ \mathrm{\scriptscriptstyle T} }}{\bf H}_{\hat{{\boldsymbol \gamma}}}{\bf X})}\right]^{-\frac{n+\nu}{2}}
+\end{eqnarray} \tag{2.2}\]</span></span> where <span class="math inline">\({\bf a}^x = (a_1^x,\ldots,a_p^x)\)</span>, <span class="math inline">\({\bf a}\boldsymbol{\cdot}{\bf b}= (a_1b_1,\ldots,a_pb_p)\)</span>, <span class="math inline">\({\bf a}/{\bf b}= (a_1/b_1,\ldots,a_p/b_p)\)</span> for generic vectors <span class="math inline">\({\bf a}\)</span> and <span class="math inline">\({\bf b}\)</span>, and <span class="math inline">\(c_{\hat{\boldsymbol \gamma}}^+= {\zeta}^{-\frac{m(k+1)}{2}}|{\bf X}_{\hat{\boldsymbol \gamma}}^{{ \mathrm{\scriptscriptstyle T} }}{\bf X}_{\hat{\boldsymbol \gamma}}+\zeta^{-1}{\bf I}_{k}|^{-\frac{m}{2}}\left|{\bf Y}^{{ \mathrm{\scriptscriptstyle T} }}{\bf H}_{\hat{{\boldsymbol \gamma}}}{\bf Y}+{\boldsymbol \Psi}\right|^{-\frac{n+\nu}{2}}\)</span> is a constant with respect to <span class="math inline">\(i\notin \hat{\boldsymbol \gamma}\)</span>.</p>
+<p>Take logarithm of <a href="#eq-2">Equation&nbsp;<span>2.2</span></a>, we have <span id="eq-3"><span class="math display">\[\begin{eqnarray}
+\log({\bf s}_+(\hat{\boldsymbol \gamma})) = \log(c_{\hat{\boldsymbol \gamma}}^+){\boldsymbol 1}_p-\frac{m}{2}\log({\bf d})-\frac{n+\nu}{2}\log(1-\frac{{\bf u}}{{\bf d}}),
+\end{eqnarray} \tag{2.3}\]</span></span> where <span class="math inline">\({\bf d}= \zeta^{-1}{\boldsymbol 1}_p+{\rm diag}({\bf X}^{{ \mathrm{\scriptscriptstyle T} }}{\bf H}_{\hat{{\boldsymbol \gamma}}}{\bf X})\)</span> and <span class="math inline">\({\bf u}={\rm diag}({\bf X}^{{ \mathrm{\scriptscriptstyle T} }}{\bf H}_{\hat{{\boldsymbol \gamma}}}{\bf Y}({\bf Y}^{{ \mathrm{\scriptscriptstyle T} }}{\bf H}_{\hat{{\boldsymbol \gamma}}}{\bf Y}+{\boldsymbol \Psi})^{-1}{\bf Y}^{{ \mathrm{\scriptscriptstyle T} }}{\bf H}_{\hat{{\boldsymbol \gamma}}}{\bf X})\)</span>.</p>
+<p>In the following R code example, we will evaluate <span class="math inline">\({\bf s}({\bf Y}|{\text{nbd}}_+(\hat{\boldsymbol \gamma}))\)</span> by <a href="#eq-1">Equation&nbsp;<span>2.1</span></a> with the for-loop method and by <a href="#eq-3">Equation&nbsp;<span>2.3</span></a> with fast computing algorithm, respectively.</p>
+</section>
+<section id="r-code-example-of-eq-1-and-eq-3" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> R code example of <a href="#eq-1">Equation&nbsp;<span>2.1</span></a> and <a href="#eq-3">Equation&nbsp;<span>2.3</span></a></h1>
+<p>In this example, we consider the data generation method with</p>
+<ul>
+<li><span class="math inline">\(n=100, p = 1000, m = 5, \zeta = \log(n), {\boldsymbol \Psi}= 0.5{\bf I}_m, \nu = 0.5\)</span>.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>zeta <span class="ot">&lt;-</span> <span class="fu">log</span>(n)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>Psi <span class="ot">&lt;-</span> <span class="fu">diag</span>(<span class="fl">0.5</span>, m)  <span class="co"># Psi</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fl">0.5</span>  <span class="co"># nu</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>and generate data <span class="math inline">\({\bf Y}={\bf X}{\bf C}+ {\bf E}\)</span>, where <span class="math inline">\({\bf E}\sim \mathcal{MN}(0,\bf I_n, {\boldsymbol\Omega})\)</span> with <span class="math inline">\({\boldsymbol\Omega}= 0.2^{|i-j|}\)</span> and <span class="math inline">\({\bf X}\sim\mathcal{N}{\bf 0}, {\boldsymbol \Sigma})\)</span> with <span class="math inline">\({\boldsymbol \Sigma}= 0.2^{|i-j|}\)</span>. The true model is <span class="math inline">\({\boldsymbol \gamma}^* = (1,2,3,4,7,8,9,10)\)</span> with their coefficients <span class="math inline">\(\bf C_{\boldsymbol \gamma}\)</span> randomly and independently sampled from Uniform{-1.0, -0.8, -0.6, -0.4, -0.2, 0.0, 0.2, 0.4, 0.6, 0.8 , 1.0}. The current model is <span class="math inline">\(\hat{\boldsymbol \gamma}= (1,2,3,4,7,8,9)\)</span> with model size <span class="math inline">\(|\hat{\boldsymbol \gamma}| = 7\)</span>.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate data</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mvtnorm)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1314</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>true.model <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="dv">7</span><span class="sc">:</span><span class="dv">10</span>)  <span class="co"># true model</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="dv">7</span><span class="sc">:</span><span class="dv">9</span>)  <span class="co"># current model</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="fu">length</span>(r)  <span class="co"># current model size</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>rho_e <span class="ot">&lt;-</span> <span class="fl">0.2</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>Omega <span class="ot">&lt;-</span> rho_e<span class="sc">^</span>(<span class="fu">abs</span>(<span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span>m, m, m) <span class="sc">-</span> <span class="fu">t</span>(<span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span>m, m, m))))</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>rho_x <span class="ot">&lt;-</span> <span class="fl">0.2</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>Sig_x <span class="ot">&lt;-</span> rho_x<span class="sc">^</span>(<span class="fu">abs</span>(<span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span>p, p, p) <span class="sc">-</span> <span class="fu">t</span>(<span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span>p, p, p))))</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>seq.p <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span>p)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>len.true.model <span class="ot">&lt;-</span> <span class="fu">length</span>(true.model)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># generate random coefficient matrix C</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>c0 <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">seq</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="fl">0.2</span>), <span class="at">size =</span> len.true.model <span class="sc">*</span> m, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>C <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, p, m) <span class="co"># initialize C with 0 matrix</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>C[true.model, ] <span class="ot">&lt;-</span> <span class="fu">matrix</span>(c0, len.true.model, m)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">rmvnorm</span>(n, <span class="at">mean =</span> <span class="fu">rep</span>(<span class="dv">0</span>, p), <span class="at">sigma =</span> Sig_x, <span class="at">method =</span> <span class="st">"chol"</span>)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>E <span class="ot">&lt;-</span> <span class="fu">rmvnorm</span>(n, <span class="at">mean =</span> <span class="fu">rep</span>(<span class="dv">0</span>, m), <span class="at">sigma =</span> Omega, <span class="at">method =</span> <span class="st">"chol"</span>)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(X <span class="sc">%*%</span> C) <span class="sc">+</span> E</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>To better understand R code and corresponding notations, we list a cross-reference table for some of them as follows:</p>
+<table class="table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">I_n</td>
+<td style="text-align: center;">I_k1</td>
+<td style="text-align: center;">log.s.plus1 or log.s.plus2</td>
+<td style="text-align: center;">rUi</td>
+<td style="text-align: center;">X.rUi</td>
+<td style="text-align: center;">H.rUi</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\({\bf I}_n\)</span></td>
+<td style="text-align: center;"><span class="math inline">\({\bf I}_{k+1}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\log({\bf s}({\bf Y}|{\text{nbd}}_+(\hat{\boldsymbol \gamma})))\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\hat{\boldsymbol \gamma}\cup i\)</span></td>
+<td style="text-align: center;"><span class="math inline">\({\bf X}_{\hat{\boldsymbol \gamma}\cup i}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\({\bf H}_{\hat{\boldsymbol \gamma}\cup i}\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">log.s.Y.rUi</td>
+<td style="text-align: center;">I_k</td>
+<td style="text-align: center;">X.r</td>
+<td style="text-align: center;">X_r</td>
+<td style="text-align: center;">H.r</td>
+<td style="text-align: center;">colSums(H.r%*%X_r*X_r)</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(\log(s({\bf Y}|\hat{\boldsymbol \gamma}\cup i))\)</span></td>
+<td style="text-align: center;"><span class="math inline">\({\bf I}_k\)</span></td>
+<td style="text-align: center;"><span class="math inline">\({\bf X}_{\hat{\boldsymbol \gamma}}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\({\bf X}_{-\hat{\boldsymbol \gamma}}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\({\bf H}_{\hat{\boldsymbol \gamma}}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\({\rm diag}({\bf X}_{-\hat{\boldsymbol \gamma}}^{{ \mathrm{\scriptscriptstyle T} }}{\bf H}_{\hat{{\boldsymbol \gamma}}}{\bf X}_{-\hat{\boldsymbol \gamma}})\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">YHX_r</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\({\bf Y}^{{ \mathrm{\scriptscriptstyle T} }}{\bf H}_{\hat{{\boldsymbol \gamma}}}{\bf X}_{-\hat{\boldsymbol \gamma}}\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># For loop method</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>I_n <span class="ot">&lt;-</span> <span class="fu">diag</span>(<span class="dv">1</span>, n)  <span class="co"># n-dimension identity matrix </span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>I_k1 <span class="ot">&lt;-</span> <span class="fu">diag</span>(<span class="dv">1</span>, k <span class="sc">+</span> <span class="dv">1</span>) <span class="co"># (k+1)-dimension identity matrix</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>p_r <span class="ot">&lt;-</span> <span class="fu">setdiff</span>(<span class="fu">seq</span>(<span class="dv">1</span>, p), r)  <span class="co"># p-k vector</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>log.s.plus1 <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="fu">length</span>(p_r))</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>j <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> p_r) {</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  rUi <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">c</span>(r, i))  <span class="co"># a model in addition neighbor</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  X.rUi <span class="ot">&lt;-</span> X[, rUi]  <span class="co"># n by k+1 submatrix of X</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  XtX <span class="ot">&lt;-</span> <span class="fu">crossprod</span>(X.rUi) <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span>zeta <span class="sc">*</span> I_k1</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  H.rUi <span class="ot">&lt;-</span> I_n <span class="sc">-</span> X.rUi <span class="sc">%*%</span> <span class="fu">solve</span>(XtX) <span class="sc">%*%</span> <span class="fu">t</span>(X.rUi)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># logarithm of Eq (1.1) for a model in additional neighbor</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  log.s.Y.rUi <span class="ot">&lt;-</span> <span class="sc">-</span>m <span class="sc">*</span> (k <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">/</span><span class="dv">2</span> <span class="sc">*</span> <span class="fu">log</span>(zeta) <span class="sc">-</span> m<span class="sc">/</span><span class="dv">2</span> <span class="sc">*</span> <span class="fu">log</span>(<span class="fu">det</span>(XtX)) <span class="sc">-</span> (n <span class="sc">+</span> v)<span class="sc">/</span><span class="dv">2</span> <span class="sc">*</span> <span class="fu">log</span>(<span class="fu">det</span>(<span class="fu">t</span>(Y) <span class="sc">%*%</span> H.rUi <span class="sc">%*%</span> Y <span class="sc">+</span> Psi))</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  log.s.plus1[j] <span class="ot">&lt;-</span> log.s.Y.rUi</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  j <span class="ot">&lt;-</span> j <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Proposed Method</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>I_k <span class="ot">&lt;-</span> <span class="fu">diag</span>(<span class="dv">1</span>, k)  <span class="co"># k-dimension identity matrix </span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>X.r <span class="ot">&lt;-</span> X[, r] <span class="co"># n by k submatrix of X</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>X_r <span class="ot">&lt;-</span> X[, p_r]  <span class="co"># n by p-k m sub-matrix of X</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>H.r <span class="ot">&lt;-</span> I_n <span class="sc">-</span> X.r <span class="sc">%*%</span> <span class="fu">solve</span>(<span class="fu">crossprod</span>(X.r) <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span>zeta <span class="sc">*</span> I_k) <span class="sc">%*%</span> <span class="fu">t</span>(X.r)  <span class="co"># n by n matrix</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>zeta <span class="sc">+</span> <span class="fu">colSums</span>(H.r <span class="sc">%*%</span> X_r <span class="sc">*</span> X_r)  <span class="co"># p-k dimension vector</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>YHX_r <span class="ot">&lt;-</span> <span class="fu">t</span>(Y) <span class="sc">%*%</span> H.r <span class="sc">%*%</span> X_r  <span class="co"># p-k by m matrix</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>YHY_1 <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(Y) <span class="sc">%*%</span> H.r <span class="sc">%*%</span> Y <span class="sc">+</span> Psi)  <span class="co"># m by m matrix</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>u <span class="ot">&lt;-</span> <span class="fu">colSums</span>(YHY_1 <span class="sc">%*%</span> YHX_r <span class="sc">*</span> YHX_r)  <span class="co"># p-k dimension vector</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="co"># last two items of logarithm of Eq (1.3)</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>log.s.plus1.prop <span class="ot">&lt;-</span> <span class="sc">-</span>m<span class="sc">/</span><span class="dv">2</span> <span class="sc">*</span> <span class="fu">log</span>(d) <span class="sc">-</span> (n <span class="sc">+</span> v)<span class="sc">/</span><span class="dv">2</span> <span class="sc">*</span> <span class="fu">log</span>(<span class="dv">1</span> <span class="sc">-</span> u<span class="sc">/</span>d)</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="co"># log(c)</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>log.c <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fl">0.5</span> <span class="sc">*</span> m <span class="sc">*</span> (k <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">*</span> <span class="fu">log</span>(zeta) <span class="sc">-</span> <span class="fl">0.5</span> <span class="sc">*</span> m <span class="sc">*</span> <span class="fu">log</span>(<span class="fu">det</span>(<span class="fu">crossprod</span>(X.r) <span class="sc">+</span> </span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span><span class="sc">/</span>zeta <span class="sc">*</span> I_k)) <span class="sc">-</span> (n <span class="sc">+</span> v)<span class="sc">/</span><span class="dv">2</span> <span class="sc">*</span> <span class="fu">log</span>(<span class="fu">det</span>(<span class="fu">t</span>(Y) <span class="sc">%*%</span> H.r <span class="sc">%*%</span> Y <span class="sc">+</span> Psi))</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>log.s.plus2 <span class="ot">&lt;-</span> log.c <span class="sc">+</span> log.s.plus1.prop  <span class="co"># logarithm of Eq (1.3)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>There are <span class="math inline">\(993\)</span> marginal likelihoods in addition neighbor of model <span class="math inline">\(\{1,2,3,4,7,8,9\}\)</span> in <code>log.s.plus1</code> and <code>log.s.plus2</code>. We compute mean absolute percentage error <span class="math inline">\(\text{MAPE} = \frac{1}{n}\Sigma_{t=1}^n|\frac{A_t-F_t}{A_t}|\)</span> to measure the accuracy of the fast computing algorithm.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Mean absolute percentage error</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>MAPE <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">abs</span>(log.s.plus1 <span class="sc">-</span> log.s.plus2)<span class="sc">/</span><span class="fu">abs</span>(log.s.plus1))</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"MAPE ="</span>, MAPE))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "MAPE = 1.55883482799341e-16"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(log.s.plus1, log.s.plus2)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a =</span> <span class="dv">0</span>, <span class="at">b =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>From the plot and MAPE, <span class="math inline">\(\log({\bf s}({\bf Y}|{\text{nbd}}_+(\hat{\boldsymbol \gamma})))\)</span> computed by <a href="#eq-1">Equation&nbsp;<span>2.1</span></a> and <a href="#eq-3">Equation&nbsp;<span>2.3</span></a> are the same, which confirms R code is correct. Next is to compute the time cost.</p>
+</section>
+<section id="simulation-study" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Simulation study</h1>
+<p>Note that <span class="math inline">\(\log(c_{\hat{\boldsymbol \gamma}}^+)\)</span> is a constant with respect to <span class="math inline">\(i\notin \hat{\boldsymbol \gamma}\)</span> in <a href="#eq-3">Equation&nbsp;<span>2.3</span></a>, we can ignore it and only compute <code>log.s.plus1.prop</code> to save time for the purpose of variable selection. We use R package <code>microbenchmark</code> to conduct the simulation study with the default replication 100 times.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(microbenchmark)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>timecost <span class="ot">&lt;-</span> <span class="fu">microbenchmark</span>(<span class="st">"for_loop"</span> <span class="ot">=</span> {</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  log.s.plus1 <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="fu">length</span>(p_r))</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  j <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> p_r) {</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    rUi <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">c</span>(r, i))  <span class="co"># a model in addition neighbor</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    X.rUi <span class="ot">&lt;-</span> X[, rUi]  <span class="co"># n by k+1 submatrix of X</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    XtX <span class="ot">&lt;-</span> <span class="fu">crossprod</span>(X.rUi) <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span>zeta <span class="sc">*</span> I_k1</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    H.rUi <span class="ot">&lt;-</span> I_n <span class="sc">-</span> X.rUi <span class="sc">%*%</span> <span class="fu">solve</span>(XtX) <span class="sc">%*%</span> <span class="fu">t</span>(X.rUi)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># logarithm of Eq (1.1) for a model in additional neighbor</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    log.s.Y.rUi <span class="ot">&lt;-</span> <span class="sc">-</span>m <span class="sc">*</span> (k <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">/</span><span class="dv">2</span> <span class="sc">*</span> <span class="fu">log</span>(zeta) <span class="sc">-</span> m<span class="sc">/</span><span class="dv">2</span> <span class="sc">*</span> <span class="fu">log</span>(<span class="fu">det</span>(XtX)) <span class="sc">-</span> (n <span class="sc">+</span> v)<span class="sc">/</span><span class="dv">2</span> <span class="sc">*</span> <span class="fu">log</span>(<span class="fu">det</span>(<span class="fu">t</span>(Y) <span class="sc">%*%</span> H.rUi <span class="sc">%*%</span> Y <span class="sc">+</span> Psi))</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    log.s.plus1[j] <span class="ot">&lt;-</span> log.s.Y.rUi</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    j <span class="ot">&lt;-</span> j <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>},</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="st">"Proposed"</span> <span class="ot">=</span> {</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>I_k <span class="ot">&lt;-</span> <span class="fu">diag</span>(<span class="dv">1</span>, k)  <span class="co"># k-dimension identity matrix </span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>X.r <span class="ot">&lt;-</span> X[, r] <span class="co"># n by k submatrix of X</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>X_r <span class="ot">&lt;-</span> X[, p_r]  <span class="co"># n by p-k m sub-matrix of X</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>H.r <span class="ot">&lt;-</span> I_n <span class="sc">-</span> X.r <span class="sc">%*%</span> <span class="fu">solve</span>(<span class="fu">crossprod</span>(X.r) <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span>zeta <span class="sc">*</span> I_k) <span class="sc">%*%</span> <span class="fu">t</span>(X.r)  <span class="co"># n by n matrix</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>zeta <span class="sc">+</span> <span class="fu">colSums</span>(H.r <span class="sc">%*%</span> X_r <span class="sc">*</span> X_r)  <span class="co"># p-k dimension vector</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>YHX_r <span class="ot">&lt;-</span> <span class="fu">t</span>(Y) <span class="sc">%*%</span> H.r <span class="sc">%*%</span> X_r  <span class="co"># p-k by m matrix</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>YHY_1 <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(Y) <span class="sc">%*%</span> H.r <span class="sc">%*%</span> Y <span class="sc">+</span> Psi)  <span class="co"># m by m matrix</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>u <span class="ot">&lt;-</span> <span class="fu">colSums</span>(YHY_1 <span class="sc">%*%</span> YHX_r <span class="sc">*</span> YHX_r)  <span class="co"># p-k dimension vector</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="co"># last two items of logarithm of Eq (1.3)</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>log.s.plus1.prop <span class="ot">&lt;-</span> <span class="sc">-</span>m<span class="sc">/</span><span class="dv">2</span> <span class="sc">*</span> <span class="fu">log</span>(d) <span class="sc">-</span> (n <span class="sc">+</span> v)<span class="sc">/</span><span class="dv">2</span> <span class="sc">*</span> <span class="fu">log</span>(<span class="dv">1</span> <span class="sc">-</span> u<span class="sc">/</span>d)</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>) </span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>timecost</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Unit: milliseconds
+     expr        min         lq      mean     median         uq       max neval
+ for_loop 144.006329 157.604586 195.91860 169.235529 204.147722 502.21531   100
+ Proposed   1.272944   1.322159   2.08821   1.423167   1.652661  24.11825   100</code></pre>
+</div>
+</div>
+<p>Looking at the median of time cost, the fast computing algorithm is about 120 times faster than the for-loop method.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

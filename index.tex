@@ -1,0 +1,521 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  letterpaper,
+]{book}
+
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\setcounter{secnumdepth}{5}
+% Make \paragraph and \subparagraph free-standing
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{241,243,245}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.40,0.45,0.13}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\ExtensionTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.28,0.35,0.67}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.46,0.62}{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\NormalTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.07,0.07,0.07}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{bookmark}{}{\usepackage{bookmark}}
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Table of contents}
+\else
+  \newcommand\contentsname{Table of contents}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{List of Figures}
+\else
+  \newcommand\listfigurename{List of Figures}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{List of Tables}
+\else
+  \newcommand\listtablename{List of Tables}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figure}
+\else
+  \newcommand\figurename{Figure}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Table}
+\else
+  \newcommand\tablename{Table}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listing}
+\newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+\makeatletter
+\@ifpackageloaded{tcolorbox}{}{\usepackage[many]{tcolorbox}}
+\makeatother
+\makeatletter
+\@ifundefined{shadecolor}{\definecolor{shadecolor}{rgb}{.97, .97, .97}}
+\makeatother
+\makeatletter
+\makeatother
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={R code example for fast computing algorithm},
+  pdfauthor={Shiqiang Jin and Gyuhyeong Goh},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{R code example for fast computing algorithm}
+\author{Shiqiang Jin and Gyuhyeong Goh}
+\date{11/14/22}
+
+\begin{document}
+\frontmatter
+\maketitle
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, enhanced, borderline west={3pt}{0pt}{shadecolor}, breakable, sharp corners, boxrule=0pt, interior hidden]}{\end{tcolorbox}}\fi
+
+\renewcommand*\contentsname{Table of contents}
+{
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\mainmatter
+\bookmarksetup{startatroot}
+
+\hypertarget{r-code-example-for-fast-computing-algorithm}{%
+\chapter{R code example for fast computing
+algorithm}\label{r-code-example-for-fast-computing-algorithm}}
+
+\newcommand{\uA}{{\bf A}}
+\newcommand{\ua}{{\bf a}}
+\newcommand{\uB}{{\bf B}}
+\newcommand{\ub}{{\bf b}}
+\newcommand{\uC}{{\bf C}}
+\newcommand{\uc}{{\bf c}}
+\newcommand{\ud}{{\bf d}}
+\newcommand{\ue}{{\bf e}}
+\newcommand{\uE}{{\bf E}}
+\newcommand{\uH}{{\bf H}}
+\newcommand{\uI}{{\bf I}}
+\newcommand{\uK}{{\bf K}}
+\newcommand{\bP}{{\bf P}}
+\newcommand{\uQ}{{\bf Q}}
+\newcommand{\uv}{{\bf v}}
+\newcommand{\uV}{{\bf V}}
+\newcommand{\us}{{\bf s}}
+\newcommand{\T}{{ \mathrm{\scriptscriptstyle T} }}
+\newcommand{\uU}{{\bf U}}
+\newcommand{\uu}{{\bf u}}
+\newcommand{\uX}{{\bf X}}
+\newcommand{\ux}{{\bf x}}
+\newcommand{\uY}{{\bf Y}}
+\newcommand{\uy}{{\bf y}}
+
+\newcommand{\0}{{\bf 0}}
+\newcommand{\1}{{\boldsymbol 1}}
+\newcommand{\ualpha}{{\boldsymbol \alpha}}
+\newcommand{\ubeta}{{\boldsymbol \beta}}
+\newcommand{\diag}{{\rm diag}}
+\newcommand{\uepsilon}{{\boldsymbol \epsilon}}
+\newcommand{\ueta}{{\boldsymbol \eta}}
+\newcommand{\bg}{{\boldsymbol \gamma}}
+\newcommand{\bOmega}{{\boldsymbol\Omega}}
+\newcommand{\uPsi}{{\boldsymbol \Psi}}
+\newcommand{\uSigma}{{\boldsymbol \Sigma}}
+\newcommand{\uxi}{{\boldsymbol \xi}}
+\newcommand{\nbd}{{\text{nbd}}}
+
+This is a supplementary document of a couple of R code examples
+displaying the time costs using for-loop method compared with fast
+computing algorithm in the paper \textbf{Bayesian best subset selection
+by hybrid search under multivariate regression model of high dimensional
+data}.
+
+The R code examples compute marginal likelihood functions only in
+addition neighbor of the current model as the code for deletion neighbor
+is similar. The running time of executing fast computing algorithm and
+for-loop method is recorded to demonstrate the high efficiency of the
+proposed method.
+
+\bookmarksetup{startatroot}
+
+\hypertarget{review-of-marginal-likelihoods-in-addition-neighbor}{%
+\chapter{Review of marginal likelihoods in addition
+neighbor}\label{review-of-marginal-likelihoods-in-addition-neighbor}}
+
+For any \(i\notin\hat{\boldsymbol \gamma}\),
+\(|\hat{\boldsymbol \gamma}\cup\{i\}|=k+1\), hence
+\(s({\bf Y}|\hat{\boldsymbol \gamma}\cup\{i\})\) in Eq.(6) of the paper
+can be expressed as
+
+\begin{equation}\protect\hypertarget{eq-1}{}{
+s({\bf Y}|\hat{\boldsymbol \gamma}\cup\{i\})={\zeta}^{-\frac{m(k+1)}{2}}|{\bf X}_{\hat{\boldsymbol \gamma}\cup\{i\}}^{{ \mathrm{\scriptscriptstyle T} }}{\bf X}_{\hat{\boldsymbol \gamma}\cup\{i\}}+\zeta^{-1}{\bf I}_{k+1}|^{-\frac{m}{2}}| {\bf Y}^{{ \mathrm{\scriptscriptstyle T} }}{\bf H}_{\hat{\boldsymbol \gamma}\cup\{i\}}{\bf Y}+{\boldsymbol \Psi}|^{-\frac{n+\nu}{2}}.
+}\label{eq-1}\end{equation}
+
+With fast computing algorithm, we have
+\begin{equation}\protect\hypertarget{eq-2}{}{\begin{eqnarray}
+{\bf s}_+(\hat{\boldsymbol \gamma}) &=& c_{\hat{\boldsymbol \gamma}}^+\times \left(\zeta^{-1}{\boldsymbol 1}_p+{\rm diag}({\bf X}^{{ \mathrm{\scriptscriptstyle T} }}{\bf H}_{\hat{{\boldsymbol \gamma}}}{\bf X})\right)^{-\frac{m}{2}}\boldsymbol{\cdot}\\
+&&\left[{\boldsymbol 1}_p - \frac{{\rm diag}({\bf X}^{{ \mathrm{\scriptscriptstyle T} }}{\bf H}_{\hat{{\boldsymbol \gamma}}}{\bf Y}({\bf Y}^{{ \mathrm{\scriptscriptstyle T} }}{\bf H}_{\hat{{\boldsymbol \gamma}}}{\bf Y}+{\boldsymbol \Psi})^{-1}{\bf Y}^{{ \mathrm{\scriptscriptstyle T} }}{\bf H}_{\hat{{\boldsymbol \gamma}}}{\bf X})}{\zeta^{-1}{\boldsymbol 1}_p+{\rm diag}({\bf X}^{{ \mathrm{\scriptscriptstyle T} }}{\bf H}_{\hat{{\boldsymbol \gamma}}}{\bf X})}\right]^{-\frac{n+\nu}{2}}
+\end{eqnarray}}\label{eq-2}\end{equation} where
+\({\bf a}^x = (a_1^x,\ldots,a_p^x)\),
+\({\bf a}\boldsymbol{\cdot}{\bf b}= (a_1b_1,\ldots,a_pb_p)\),
+\({\bf a}/{\bf b}= (a_1/b_1,\ldots,a_p/b_p)\) for generic vectors
+\({\bf a}\) and \({\bf b}\), and
+\(c_{\hat{\boldsymbol \gamma}}^+= {\zeta}^{-\frac{m(k+1)}{2}}|{\bf X}_{\hat{\boldsymbol \gamma}}^{{ \mathrm{\scriptscriptstyle T} }}{\bf X}_{\hat{\boldsymbol \gamma}}+\zeta^{-1}{\bf I}_{k}|^{-\frac{m}{2}}\left|{\bf Y}^{{ \mathrm{\scriptscriptstyle T} }}{\bf H}_{\hat{{\boldsymbol \gamma}}}{\bf Y}+{\boldsymbol \Psi}\right|^{-\frac{n+\nu}{2}}\)
+is a constant with respect to \(i\notin \hat{\boldsymbol \gamma}\).
+
+Take logarithm of Equation~\ref{eq-2}, we have
+\begin{equation}\protect\hypertarget{eq-3}{}{\begin{eqnarray}
+\log({\bf s}_+(\hat{\boldsymbol \gamma})) = \log(c_{\hat{\boldsymbol \gamma}}^+){\boldsymbol 1}_p-\frac{m}{2}\log({\bf d})-\frac{n+\nu}{2}\log(1-\frac{{\bf u}}{{\bf d}}),
+\end{eqnarray}}\label{eq-3}\end{equation} where
+\({\bf d}= \zeta^{-1}{\boldsymbol 1}_p+{\rm diag}({\bf X}^{{ \mathrm{\scriptscriptstyle T} }}{\bf H}_{\hat{{\boldsymbol \gamma}}}{\bf X})\)
+and
+\({\bf u}={\rm diag}({\bf X}^{{ \mathrm{\scriptscriptstyle T} }}{\bf H}_{\hat{{\boldsymbol \gamma}}}{\bf Y}({\bf Y}^{{ \mathrm{\scriptscriptstyle T} }}{\bf H}_{\hat{{\boldsymbol \gamma}}}{\bf Y}+{\boldsymbol \Psi})^{-1}{\bf Y}^{{ \mathrm{\scriptscriptstyle T} }}{\bf H}_{\hat{{\boldsymbol \gamma}}}{\bf X})\).
+
+In the following R code example, we will evaluate
+\({\bf s}({\bf Y}|{\text{nbd}}_+(\hat{\boldsymbol \gamma}))\) by
+Equation~\ref{eq-1} with the for-loop method and by Equation~\ref{eq-3}
+with fast computing algorithm, respectively.
+
+\bookmarksetup{startatroot}
+
+\hypertarget{r-code-example-of-eq-1-and-eq-3}{%
+\chapter{\texorpdfstring{R code example of Equation~\ref{eq-1} and
+Equation~\ref{eq-3}}{R code example of Equation~ and Equation~}}\label{r-code-example-of-eq-1-and-eq-3}}
+
+In this example, we consider the data generation method with
+
+\begin{itemize}
+\tightlist
+\item
+  \(n=100, p = 1000, m = 5, \zeta = \log(n), {\boldsymbol \Psi}= 0.5{\bf I}_m, \nu = 0.5\).
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{100}
+\NormalTok{p }\OtherTok{\textless{}{-}} \DecValTok{1000}
+\NormalTok{m }\OtherTok{\textless{}{-}} \DecValTok{5}
+\NormalTok{zeta }\OtherTok{\textless{}{-}} \FunctionTok{log}\NormalTok{(n)}
+\NormalTok{Psi }\OtherTok{\textless{}{-}} \FunctionTok{diag}\NormalTok{(}\FloatTok{0.5}\NormalTok{, m)  }\CommentTok{\# Psi}
+\NormalTok{v }\OtherTok{\textless{}{-}} \FloatTok{0.5}  \CommentTok{\# nu}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  and generate data \({\bf Y}={\bf X}{\bf C}+ {\bf E}\), where
+  \({\bf E}\sim \mathcal{MN}(0,\bf I_n, {\boldsymbol\Omega})\) with
+  \({\boldsymbol\Omega}= 0.2^{|i-j|}\) and
+  \({\bf X}\sim\mathcal{N}{\bf 0}, {\boldsymbol \Sigma})\) with
+  \({\boldsymbol \Sigma}= 0.2^{|i-j|}\). The true model is
+  \({\boldsymbol \gamma}^* = (1,2,3,4,7,8,9,10)\) with their
+  coefficients \(\bf C_{\boldsymbol \gamma}\) randomly and independently
+  sampled from Uniform\{-1.0, -0.8, -0.6, -0.4, -0.2, 0.0, 0.2, 0.4,
+  0.6, 0.8 , 1.0\}. The current model is
+  \(\hat{\boldsymbol \gamma}= (1,2,3,4,7,8,9)\) with model size
+  \(|\hat{\boldsymbol \gamma}| = 7\).
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Generate data}
+\FunctionTok{library}\NormalTok{(mvtnorm)}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{1314}\NormalTok{)}
+\NormalTok{true.model }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{, }\DecValTok{7}\SpecialCharTok{:}\DecValTok{10}\NormalTok{)  }\CommentTok{\# true model}
+\NormalTok{r }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{, }\DecValTok{7}\SpecialCharTok{:}\DecValTok{9}\NormalTok{)  }\CommentTok{\# current model}
+\NormalTok{k }\OtherTok{\textless{}{-}} \FunctionTok{length}\NormalTok{(r)  }\CommentTok{\# current model size}
+\NormalTok{rho\_e }\OtherTok{\textless{}{-}} \FloatTok{0.2}
+\NormalTok{Omega }\OtherTok{\textless{}{-}}\NormalTok{ rho\_e}\SpecialCharTok{\^{}}\NormalTok{(}\FunctionTok{abs}\NormalTok{(}\FunctionTok{matrix}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{m, m, m) }\SpecialCharTok{{-}} \FunctionTok{t}\NormalTok{(}\FunctionTok{matrix}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{m, m, m))))}
+\NormalTok{rho\_x }\OtherTok{\textless{}{-}} \FloatTok{0.2}
+\NormalTok{Sig\_x }\OtherTok{\textless{}{-}}\NormalTok{ rho\_x}\SpecialCharTok{\^{}}\NormalTok{(}\FunctionTok{abs}\NormalTok{(}\FunctionTok{matrix}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{p, p, p) }\SpecialCharTok{{-}} \FunctionTok{t}\NormalTok{(}\FunctionTok{matrix}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{p, p, p))))}
+\NormalTok{seq.p }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{p)}
+\NormalTok{len.true.model }\OtherTok{\textless{}{-}} \FunctionTok{length}\NormalTok{(true.model)}
+\CommentTok{\# generate random coefficient matrix C}
+\NormalTok{c0 }\OtherTok{\textless{}{-}} \FunctionTok{sample}\NormalTok{(}\FunctionTok{seq}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\FloatTok{0.2}\NormalTok{), }\AttributeTok{size =}\NormalTok{ len.true.model }\SpecialCharTok{*}\NormalTok{ m, }\AttributeTok{replace =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{C }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\DecValTok{0}\NormalTok{, p, m) }\CommentTok{\# initialize C with 0 matrix}
+\NormalTok{C[true.model, ] }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(c0, len.true.model, m)}
+\NormalTok{X }\OtherTok{\textless{}{-}} \FunctionTok{rmvnorm}\NormalTok{(n, }\AttributeTok{mean =} \FunctionTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{, p), }\AttributeTok{sigma =}\NormalTok{ Sig\_x, }\AttributeTok{method =} \StringTok{"chol"}\NormalTok{)}
+\NormalTok{E }\OtherTok{\textless{}{-}} \FunctionTok{rmvnorm}\NormalTok{(n, }\AttributeTok{mean =} \FunctionTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{, m), }\AttributeTok{sigma =}\NormalTok{ Omega, }\AttributeTok{method =} \StringTok{"chol"}\NormalTok{)}
+\NormalTok{Y }\OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(X }\SpecialCharTok{\%*\%}\NormalTok{ C) }\SpecialCharTok{+}\NormalTok{ E}
+\end{Highlighting}
+\end{Shaded}
+
+To better understand R code and corresponding notations, we list a
+cross-reference table for some of them as follows:
+
+\begin{longtable}[]{@{}
+  >{\centering\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\centering\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\centering\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\centering\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\centering\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\centering\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}@{}}
+\toprule()
+\endhead
+I\_n & I\_k1 & log.s.plus1 or log.s.plus2 & rUi & X.rUi & H.rUi \\
+\({\bf I}_n\) & \({\bf I}_{k+1}\) &
+\(\log({\bf s}({\bf Y}|{\text{nbd}}_+(\hat{\boldsymbol \gamma})))\) &
+\(\hat{\boldsymbol \gamma}\cup i\) &
+\({\bf X}_{\hat{\boldsymbol \gamma}\cup i}\) &
+\({\bf H}_{\hat{\boldsymbol \gamma}\cup i}\) \\
+log.s.Y.rUi & I\_k & X.r & X\_r & H.r & colSums(H.r\%*\%X\_r*X\_r) \\
+\(\log(s({\bf Y}|\hat{\boldsymbol \gamma}\cup i))\) & \({\bf I}_k\) &
+\({\bf X}_{\hat{\boldsymbol \gamma}}\) &
+\({\bf X}_{-\hat{\boldsymbol \gamma}}\) &
+\({\bf H}_{\hat{\boldsymbol \gamma}}\) &
+\({\rm diag}({\bf X}_{-\hat{\boldsymbol \gamma}}^{{ \mathrm{\scriptscriptstyle T} }}{\bf H}_{\hat{{\boldsymbol \gamma}}}{\bf X}_{-\hat{\boldsymbol \gamma}})\) \\
+YHX\_r & & & & & \\
+\({\bf Y}^{{ \mathrm{\scriptscriptstyle T} }}{\bf H}_{\hat{{\boldsymbol \gamma}}}{\bf X}_{-\hat{\boldsymbol \gamma}}\)
+& & & & & \\
+\bottomrule()
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# For loop method}
+\NormalTok{I\_n }\OtherTok{\textless{}{-}} \FunctionTok{diag}\NormalTok{(}\DecValTok{1}\NormalTok{, n)  }\CommentTok{\# n{-}dimension identity matrix }
+\NormalTok{I\_k1 }\OtherTok{\textless{}{-}} \FunctionTok{diag}\NormalTok{(}\DecValTok{1}\NormalTok{, k }\SpecialCharTok{+} \DecValTok{1}\NormalTok{) }\CommentTok{\# (k+1){-}dimension identity matrix}
+\NormalTok{p\_r }\OtherTok{\textless{}{-}} \FunctionTok{setdiff}\NormalTok{(}\FunctionTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{, p), r)  }\CommentTok{\# p{-}k vector}
+\NormalTok{log.s.plus1 }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\ConstantTok{NA}\NormalTok{, }\FunctionTok{length}\NormalTok{(p\_r))}
+\NormalTok{j }\OtherTok{\textless{}{-}} \DecValTok{1}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in}\NormalTok{ p\_r) \{}
+\NormalTok{  rUi }\OtherTok{\textless{}{-}} \FunctionTok{sort}\NormalTok{(}\FunctionTok{c}\NormalTok{(r, i))  }\CommentTok{\# a model in addition neighbor}
+\NormalTok{  X.rUi }\OtherTok{\textless{}{-}}\NormalTok{ X[, rUi]  }\CommentTok{\# n by k+1 submatrix of X}
+\NormalTok{  XtX }\OtherTok{\textless{}{-}} \FunctionTok{crossprod}\NormalTok{(X.rUi) }\SpecialCharTok{+} \DecValTok{1}\SpecialCharTok{/}\NormalTok{zeta }\SpecialCharTok{*}\NormalTok{ I\_k1}
+\NormalTok{  H.rUi }\OtherTok{\textless{}{-}}\NormalTok{ I\_n }\SpecialCharTok{{-}}\NormalTok{ X.rUi }\SpecialCharTok{\%*\%} \FunctionTok{solve}\NormalTok{(XtX) }\SpecialCharTok{\%*\%} \FunctionTok{t}\NormalTok{(X.rUi)}
+  \CommentTok{\# logarithm of Eq (1.1) for a model in additional neighbor}
+\NormalTok{  log.s.Y.rUi }\OtherTok{\textless{}{-}} \SpecialCharTok{{-}}\NormalTok{m }\SpecialCharTok{*}\NormalTok{ (k }\SpecialCharTok{+} \DecValTok{1}\NormalTok{)}\SpecialCharTok{/}\DecValTok{2} \SpecialCharTok{*} \FunctionTok{log}\NormalTok{(zeta) }\SpecialCharTok{{-}}\NormalTok{ m}\SpecialCharTok{/}\DecValTok{2} \SpecialCharTok{*} \FunctionTok{log}\NormalTok{(}\FunctionTok{det}\NormalTok{(XtX)) }\SpecialCharTok{{-}}\NormalTok{ (n }\SpecialCharTok{+}\NormalTok{ v)}\SpecialCharTok{/}\DecValTok{2} \SpecialCharTok{*} \FunctionTok{log}\NormalTok{(}\FunctionTok{det}\NormalTok{(}\FunctionTok{t}\NormalTok{(Y) }\SpecialCharTok{\%*\%}\NormalTok{ H.rUi }\SpecialCharTok{\%*\%}\NormalTok{ Y }\SpecialCharTok{+}\NormalTok{ Psi))}
+\NormalTok{  log.s.plus1[j] }\OtherTok{\textless{}{-}}\NormalTok{ log.s.Y.rUi}
+\NormalTok{  j }\OtherTok{\textless{}{-}}\NormalTok{ j }\SpecialCharTok{+} \DecValTok{1}
+\NormalTok{\}}
+
+\CommentTok{\# Proposed Method}
+\NormalTok{I\_k }\OtherTok{\textless{}{-}} \FunctionTok{diag}\NormalTok{(}\DecValTok{1}\NormalTok{, k)  }\CommentTok{\# k{-}dimension identity matrix }
+\NormalTok{X.r }\OtherTok{\textless{}{-}}\NormalTok{ X[, r] }\CommentTok{\# n by k submatrix of X}
+\NormalTok{X\_r }\OtherTok{\textless{}{-}}\NormalTok{ X[, p\_r]  }\CommentTok{\# n by p{-}k m sub{-}matrix of X}
+\NormalTok{H.r }\OtherTok{\textless{}{-}}\NormalTok{ I\_n }\SpecialCharTok{{-}}\NormalTok{ X.r }\SpecialCharTok{\%*\%} \FunctionTok{solve}\NormalTok{(}\FunctionTok{crossprod}\NormalTok{(X.r) }\SpecialCharTok{+} \DecValTok{1}\SpecialCharTok{/}\NormalTok{zeta }\SpecialCharTok{*}\NormalTok{ I\_k) }\SpecialCharTok{\%*\%} \FunctionTok{t}\NormalTok{(X.r)  }\CommentTok{\# n by n matrix}
+\NormalTok{d }\OtherTok{\textless{}{-}} \DecValTok{1}\SpecialCharTok{/}\NormalTok{zeta }\SpecialCharTok{+} \FunctionTok{colSums}\NormalTok{(H.r }\SpecialCharTok{\%*\%}\NormalTok{ X\_r }\SpecialCharTok{*}\NormalTok{ X\_r)  }\CommentTok{\# p{-}k dimension vector}
+\NormalTok{YHX\_r }\OtherTok{\textless{}{-}} \FunctionTok{t}\NormalTok{(Y) }\SpecialCharTok{\%*\%}\NormalTok{ H.r }\SpecialCharTok{\%*\%}\NormalTok{ X\_r  }\CommentTok{\# p{-}k by m matrix}
+\NormalTok{YHY\_1 }\OtherTok{\textless{}{-}} \FunctionTok{solve}\NormalTok{(}\FunctionTok{t}\NormalTok{(Y) }\SpecialCharTok{\%*\%}\NormalTok{ H.r }\SpecialCharTok{\%*\%}\NormalTok{ Y }\SpecialCharTok{+}\NormalTok{ Psi)  }\CommentTok{\# m by m matrix}
+\NormalTok{u }\OtherTok{\textless{}{-}} \FunctionTok{colSums}\NormalTok{(YHY\_1 }\SpecialCharTok{\%*\%}\NormalTok{ YHX\_r }\SpecialCharTok{*}\NormalTok{ YHX\_r)  }\CommentTok{\# p{-}k dimension vector}
+\CommentTok{\# last two items of logarithm of Eq (1.3)}
+\NormalTok{log.s.plus1.prop }\OtherTok{\textless{}{-}} \SpecialCharTok{{-}}\NormalTok{m}\SpecialCharTok{/}\DecValTok{2} \SpecialCharTok{*} \FunctionTok{log}\NormalTok{(d) }\SpecialCharTok{{-}}\NormalTok{ (n }\SpecialCharTok{+}\NormalTok{ v)}\SpecialCharTok{/}\DecValTok{2} \SpecialCharTok{*} \FunctionTok{log}\NormalTok{(}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ u}\SpecialCharTok{/}\NormalTok{d)}
+\CommentTok{\# log(c)}
+\NormalTok{log.c }\OtherTok{\textless{}{-}} \SpecialCharTok{{-}}\FloatTok{0.5} \SpecialCharTok{*}\NormalTok{ m }\SpecialCharTok{*}\NormalTok{ (k }\SpecialCharTok{+} \DecValTok{1}\NormalTok{) }\SpecialCharTok{*} \FunctionTok{log}\NormalTok{(zeta) }\SpecialCharTok{{-}} \FloatTok{0.5} \SpecialCharTok{*}\NormalTok{ m }\SpecialCharTok{*} \FunctionTok{log}\NormalTok{(}\FunctionTok{det}\NormalTok{(}\FunctionTok{crossprod}\NormalTok{(X.r) }\SpecialCharTok{+} 
+    \DecValTok{1}\SpecialCharTok{/}\NormalTok{zeta }\SpecialCharTok{*}\NormalTok{ I\_k)) }\SpecialCharTok{{-}}\NormalTok{ (n }\SpecialCharTok{+}\NormalTok{ v)}\SpecialCharTok{/}\DecValTok{2} \SpecialCharTok{*} \FunctionTok{log}\NormalTok{(}\FunctionTok{det}\NormalTok{(}\FunctionTok{t}\NormalTok{(Y) }\SpecialCharTok{\%*\%}\NormalTok{ H.r }\SpecialCharTok{\%*\%}\NormalTok{ Y }\SpecialCharTok{+}\NormalTok{ Psi))}
+\NormalTok{log.s.plus2 }\OtherTok{\textless{}{-}}\NormalTok{ log.c }\SpecialCharTok{+}\NormalTok{ log.s.plus1.prop  }\CommentTok{\# logarithm of Eq (1.3)}
+\end{Highlighting}
+\end{Shaded}
+
+There are \(993\) marginal likelihoods in addition neighbor of model
+\(\{1,2,3,4,7,8,9\}\) in \texttt{log.s.plus1} and \texttt{log.s.plus2}.
+We compute mean absolute percentage error
+\(\text{MAPE} = \frac{1}{n}\Sigma_{t=1}^n|\frac{A_t-F_t}{A_t}|\) to
+measure the accuracy of the fast computing algorithm.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Mean absolute percentage error}
+\NormalTok{MAPE }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(}\FunctionTok{abs}\NormalTok{(log.s.plus1 }\SpecialCharTok{{-}}\NormalTok{ log.s.plus2)}\SpecialCharTok{/}\FunctionTok{abs}\NormalTok{(log.s.plus1))}
+\FunctionTok{print}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"MAPE ="}\NormalTok{, MAPE))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "MAPE = 1.55883482799341e-16"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(log.s.plus1, log.s.plus2)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{a =} \DecValTok{0}\NormalTok{, }\AttributeTok{b =} \DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[H]
+
+{\centering \includegraphics{./index_files/figure-pdf/unnamed-chunk-4-1.pdf}
+
+}
+
+\end{figure}
+
+From the plot and MAPE,
+\(\log({\bf s}({\bf Y}|{\text{nbd}}_+(\hat{\boldsymbol \gamma})))\)
+computed by Equation~\ref{eq-1} and Equation~\ref{eq-3} are the same,
+which confirms R code is correct. Next is to compute the time cost.
+
+\bookmarksetup{startatroot}
+
+\hypertarget{simulation-study}{%
+\chapter{Simulation study}\label{simulation-study}}
+
+Note that \(\log(c_{\hat{\boldsymbol \gamma}}^+)\) is a constant with
+respect to \(i\notin \hat{\boldsymbol \gamma}\) in Equation~\ref{eq-3},
+we can ignore it and only compute \texttt{log.s.plus1.prop} to save time
+for the purpose of variable selection. We use R package
+\texttt{microbenchmark} to conduct the simulation study with the default
+replication 100 times.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(microbenchmark)}
+\NormalTok{timecost }\OtherTok{\textless{}{-}} \FunctionTok{microbenchmark}\NormalTok{(}\StringTok{"for\_loop"} \OtherTok{=}\NormalTok{ \{}
+\NormalTok{  log.s.plus1 }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\ConstantTok{NA}\NormalTok{, }\FunctionTok{length}\NormalTok{(p\_r))}
+\NormalTok{  j }\OtherTok{\textless{}{-}} \DecValTok{1}
+  \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in}\NormalTok{ p\_r) \{}
+\NormalTok{    rUi }\OtherTok{\textless{}{-}} \FunctionTok{sort}\NormalTok{(}\FunctionTok{c}\NormalTok{(r, i))  }\CommentTok{\# a model in addition neighbor}
+\NormalTok{    X.rUi }\OtherTok{\textless{}{-}}\NormalTok{ X[, rUi]  }\CommentTok{\# n by k+1 submatrix of X}
+\NormalTok{    XtX }\OtherTok{\textless{}{-}} \FunctionTok{crossprod}\NormalTok{(X.rUi) }\SpecialCharTok{+} \DecValTok{1}\SpecialCharTok{/}\NormalTok{zeta }\SpecialCharTok{*}\NormalTok{ I\_k1}
+\NormalTok{    H.rUi }\OtherTok{\textless{}{-}}\NormalTok{ I\_n }\SpecialCharTok{{-}}\NormalTok{ X.rUi }\SpecialCharTok{\%*\%} \FunctionTok{solve}\NormalTok{(XtX) }\SpecialCharTok{\%*\%} \FunctionTok{t}\NormalTok{(X.rUi)}
+    \CommentTok{\# logarithm of Eq (1.1) for a model in additional neighbor}
+\NormalTok{    log.s.Y.rUi }\OtherTok{\textless{}{-}} \SpecialCharTok{{-}}\NormalTok{m }\SpecialCharTok{*}\NormalTok{ (k }\SpecialCharTok{+} \DecValTok{1}\NormalTok{)}\SpecialCharTok{/}\DecValTok{2} \SpecialCharTok{*} \FunctionTok{log}\NormalTok{(zeta) }\SpecialCharTok{{-}}\NormalTok{ m}\SpecialCharTok{/}\DecValTok{2} \SpecialCharTok{*} \FunctionTok{log}\NormalTok{(}\FunctionTok{det}\NormalTok{(XtX)) }\SpecialCharTok{{-}}\NormalTok{ (n }\SpecialCharTok{+}\NormalTok{ v)}\SpecialCharTok{/}\DecValTok{2} \SpecialCharTok{*} \FunctionTok{log}\NormalTok{(}\FunctionTok{det}\NormalTok{(}\FunctionTok{t}\NormalTok{(Y) }\SpecialCharTok{\%*\%}\NormalTok{ H.rUi }\SpecialCharTok{\%*\%}\NormalTok{ Y }\SpecialCharTok{+}\NormalTok{ Psi))}
+\NormalTok{    log.s.plus1[j] }\OtherTok{\textless{}{-}}\NormalTok{ log.s.Y.rUi}
+\NormalTok{    j }\OtherTok{\textless{}{-}}\NormalTok{ j }\SpecialCharTok{+} \DecValTok{1}
+\NormalTok{  \}}
+\NormalTok{\},}
+\StringTok{"Proposed"} \OtherTok{=}\NormalTok{ \{}
+\NormalTok{I\_k }\OtherTok{\textless{}{-}} \FunctionTok{diag}\NormalTok{(}\DecValTok{1}\NormalTok{, k)  }\CommentTok{\# k{-}dimension identity matrix }
+\NormalTok{X.r }\OtherTok{\textless{}{-}}\NormalTok{ X[, r] }\CommentTok{\# n by k submatrix of X}
+\NormalTok{X\_r }\OtherTok{\textless{}{-}}\NormalTok{ X[, p\_r]  }\CommentTok{\# n by p{-}k m sub{-}matrix of X}
+\NormalTok{H.r }\OtherTok{\textless{}{-}}\NormalTok{ I\_n }\SpecialCharTok{{-}}\NormalTok{ X.r }\SpecialCharTok{\%*\%} \FunctionTok{solve}\NormalTok{(}\FunctionTok{crossprod}\NormalTok{(X.r) }\SpecialCharTok{+} \DecValTok{1}\SpecialCharTok{/}\NormalTok{zeta }\SpecialCharTok{*}\NormalTok{ I\_k) }\SpecialCharTok{\%*\%} \FunctionTok{t}\NormalTok{(X.r)  }\CommentTok{\# n by n matrix}
+\NormalTok{d }\OtherTok{\textless{}{-}} \DecValTok{1}\SpecialCharTok{/}\NormalTok{zeta }\SpecialCharTok{+} \FunctionTok{colSums}\NormalTok{(H.r }\SpecialCharTok{\%*\%}\NormalTok{ X\_r }\SpecialCharTok{*}\NormalTok{ X\_r)  }\CommentTok{\# p{-}k dimension vector}
+\NormalTok{YHX\_r }\OtherTok{\textless{}{-}} \FunctionTok{t}\NormalTok{(Y) }\SpecialCharTok{\%*\%}\NormalTok{ H.r }\SpecialCharTok{\%*\%}\NormalTok{ X\_r  }\CommentTok{\# p{-}k by m matrix}
+\NormalTok{YHY\_1 }\OtherTok{\textless{}{-}} \FunctionTok{solve}\NormalTok{(}\FunctionTok{t}\NormalTok{(Y) }\SpecialCharTok{\%*\%}\NormalTok{ H.r }\SpecialCharTok{\%*\%}\NormalTok{ Y }\SpecialCharTok{+}\NormalTok{ Psi)  }\CommentTok{\# m by m matrix}
+\NormalTok{u }\OtherTok{\textless{}{-}} \FunctionTok{colSums}\NormalTok{(YHY\_1 }\SpecialCharTok{\%*\%}\NormalTok{ YHX\_r }\SpecialCharTok{*}\NormalTok{ YHX\_r)  }\CommentTok{\# p{-}k dimension vector}
+\CommentTok{\# last two items of logarithm of Eq (1.3)}
+\NormalTok{log.s.plus1.prop }\OtherTok{\textless{}{-}} \SpecialCharTok{{-}}\NormalTok{m}\SpecialCharTok{/}\DecValTok{2} \SpecialCharTok{*} \FunctionTok{log}\NormalTok{(d) }\SpecialCharTok{{-}}\NormalTok{ (n }\SpecialCharTok{+}\NormalTok{ v)}\SpecialCharTok{/}\DecValTok{2} \SpecialCharTok{*} \FunctionTok{log}\NormalTok{(}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ u}\SpecialCharTok{/}\NormalTok{d)}
+\NormalTok{\}}
+\NormalTok{) }
+\NormalTok{timecost}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Unit: milliseconds
+     expr        min         lq      mean     median         uq       max neval
+ for_loop 144.006329 157.604586 195.91860 169.235529 204.147722 502.21531   100
+ Proposed   1.272944   1.322159   2.08821   1.423167   1.652661  24.11825   100
+\end{verbatim}
+
+Looking at the median of time cost, the fast computing algorithm is
+about 120 times faster than the for-loop method.
+
+
+\backmatter
+
+\end{document}

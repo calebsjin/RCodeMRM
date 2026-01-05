@@ -174,7 +174,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="toc-section-number">1</span>  Introduction</a></li>
   <li><a href="#review-of-marginal-likelihoods-in-addition-neighbor" id="toc-review-of-marginal-likelihoods-in-addition-neighbor" class="nav-link" data-scroll-target="#review-of-marginal-likelihoods-in-addition-neighbor"><span class="toc-section-number">2</span>  Review of marginal likelihoods in addition neighbor</a></li>
-  <li><a href="#r-code-example-of-eq-1-and-eq-3" id="toc-r-code-example-of-eq-1-and-eq-3" class="nav-link" data-scroll-target="#r-code-example-of-eq-1-and-eq-3"><span class="toc-section-number">3</span>  R code example of Equation&nbsp;<span>2.1</span> and Equation&nbsp;<span>2.3</span></a></li>
+  <li><a href="#r-code-example-of-eq-1-and-eq-3" id="toc-r-code-example-of-eq-1-and-eq-3" class="nav-link" data-scroll-target="#r-code-example-of-eq-1-and-eq-3"><span class="toc-section-number">3</span>  R code example of Equation&nbsp;<span class="quarto-unresolved-ref">eq-1</span> and Equation&nbsp;<span class="quarto-unresolved-ref">eq-3</span></a></li>
   <li><a href="#simulation-study" id="toc-simulation-study" class="nav-link" data-scroll-target="#simulation-study"><span class="toc-section-number">4</span>  Simulation study</a></li>
   </ul>
 </nav>
@@ -206,7 +206,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 14, 2022</p>
+      <p class="date">January 4, 2026</p>
     </div>
   </div>
   
@@ -232,13 +232,13 @@ s({\bf Y}|\hat{\boldsymbol \gamma}\cup\{i\})={\zeta}^{-\frac{m(k+1)}{2}}|{\bf X}
 {\bf s}_+(\hat{\boldsymbol \gamma}) &amp;=&amp; c_{\hat{\boldsymbol \gamma}}^+\times \left(\zeta^{-1}{\boldsymbol 1}_p+{\rm diag}({\bf X}^{{ \mathrm{\scriptscriptstyle T} }}{\bf H}_{\hat{{\boldsymbol \gamma}}}{\bf X})\right)^{-\frac{m}{2}}\boldsymbol{\cdot}\\
 &amp;&amp;\left[{\boldsymbol 1}_p - \frac{{\rm diag}({\bf X}^{{ \mathrm{\scriptscriptstyle T} }}{\bf H}_{\hat{{\boldsymbol \gamma}}}{\bf Y}({\bf Y}^{{ \mathrm{\scriptscriptstyle T} }}{\bf H}_{\hat{{\boldsymbol \gamma}}}{\bf Y}+{\boldsymbol \Psi})^{-1}{\bf Y}^{{ \mathrm{\scriptscriptstyle T} }}{\bf H}_{\hat{{\boldsymbol \gamma}}}{\bf X})}{\zeta^{-1}{\boldsymbol 1}_p+{\rm diag}({\bf X}^{{ \mathrm{\scriptscriptstyle T} }}{\bf H}_{\hat{{\boldsymbol \gamma}}}{\bf X})}\right]^{-\frac{n+\nu}{2}}
 \end{eqnarray} \tag{2.2}\]</span></span> where <span class="math inline">\({\bf a}^x = (a_1^x,\ldots,a_p^x)\)</span>, <span class="math inline">\({\bf a}\boldsymbol{\cdot}{\bf b}= (a_1b_1,\ldots,a_pb_p)\)</span>, <span class="math inline">\({\bf a}/{\bf b}= (a_1/b_1,\ldots,a_p/b_p)\)</span> for generic vectors <span class="math inline">\({\bf a}\)</span> and <span class="math inline">\({\bf b}\)</span>, and <span class="math inline">\(c_{\hat{\boldsymbol \gamma}}^+= {\zeta}^{-\frac{m(k+1)}{2}}|{\bf X}_{\hat{\boldsymbol \gamma}}^{{ \mathrm{\scriptscriptstyle T} }}{\bf X}_{\hat{\boldsymbol \gamma}}+\zeta^{-1}{\bf I}_{k}|^{-\frac{m}{2}}\left|{\bf Y}^{{ \mathrm{\scriptscriptstyle T} }}{\bf H}_{\hat{{\boldsymbol \gamma}}}{\bf Y}+{\boldsymbol \Psi}\right|^{-\frac{n+\nu}{2}}\)</span> is a constant with respect to <span class="math inline">\(i\notin \hat{\boldsymbol \gamma}\)</span>.</p>
-<p>Take logarithm of <a href="#eq-2">Equation&nbsp;<span>2.2</span></a>, we have <span id="eq-3"><span class="math display">\[\begin{eqnarray}
+<p>Take logarithm of <a href="#eq-2">Equation&nbsp;<span class="quarto-unresolved-ref">eq-2</span></a>, we have <span id="eq-3"><span class="math display">\[\begin{eqnarray}
 \log({\bf s}_+(\hat{\boldsymbol \gamma})) = \log(c_{\hat{\boldsymbol \gamma}}^+){\boldsymbol 1}_p-\frac{m}{2}\log({\bf d})-\frac{n+\nu}{2}\log(1-\frac{{\bf u}}{{\bf d}}),
 \end{eqnarray} \tag{2.3}\]</span></span> where <span class="math inline">\({\bf d}= \zeta^{-1}{\boldsymbol 1}_p+{\rm diag}({\bf X}^{{ \mathrm{\scriptscriptstyle T} }}{\bf H}_{\hat{{\boldsymbol \gamma}}}{\bf X})\)</span> and <span class="math inline">\({\bf u}={\rm diag}({\bf X}^{{ \mathrm{\scriptscriptstyle T} }}{\bf H}_{\hat{{\boldsymbol \gamma}}}{\bf Y}({\bf Y}^{{ \mathrm{\scriptscriptstyle T} }}{\bf H}_{\hat{{\boldsymbol \gamma}}}{\bf Y}+{\boldsymbol \Psi})^{-1}{\bf Y}^{{ \mathrm{\scriptscriptstyle T} }}{\bf H}_{\hat{{\boldsymbol \gamma}}}{\bf X})\)</span>.</p>
-<p>In the following R code example, we will evaluate <span class="math inline">\({\bf s}({\bf Y}|{\text{nbd}}_+(\hat{\boldsymbol \gamma}))\)</span> by <a href="#eq-1">Equation&nbsp;<span>2.1</span></a> with the for-loop method and by <a href="#eq-3">Equation&nbsp;<span>2.3</span></a> with fast computing algorithm, respectively.</p>
+<p>In the following R code example, we will evaluate <span class="math inline">\({\bf s}({\bf Y}|{\text{nbd}}_+(\hat{\boldsymbol \gamma}))\)</span> by <a href="#eq-1">Equation&nbsp;<span class="quarto-unresolved-ref">eq-1</span></a> with the for-loop method and by <a href="#eq-3">Equation&nbsp;<span class="quarto-unresolved-ref">eq-3</span></a> with fast computing algorithm, respectively.</p>
 </section>
 <section id="r-code-example-of-eq-1-and-eq-3" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> R code example of <a href="#eq-1">Equation&nbsp;<span>2.1</span></a> and <a href="#eq-3">Equation&nbsp;<span>2.3</span></a></h1>
+<h1 data-number="3"><span class="header-section-number">3</span> R code example of <a href="#eq-1">Equation&nbsp;<span class="quarto-unresolved-ref">eq-1</span></a> and <a href="#eq-3">Equation&nbsp;<span class="quarto-unresolved-ref">eq-3</span></a></h1>
 <p>In this example, we consider the data generation method with</p>
 <ul>
 <li><span class="math inline">\(n=100, p = 1000, m = 5, \zeta = \log(n), {\boldsymbol \Psi}= 0.5{\bf I}_m, \nu = 0.5\)</span>.</li>
@@ -384,11 +384,11 @@ s({\bf Y}|\hat{\boldsymbol \gamma}\cup\{i\})={\zeta}^{-\frac{m(k+1)}{2}}|{\bf X}
 <p><img src="index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>From the plot and MAPE, <span class="math inline">\(\log({\bf s}({\bf Y}|{\text{nbd}}_+(\hat{\boldsymbol \gamma})))\)</span> computed by <a href="#eq-1">Equation&nbsp;<span>2.1</span></a> and <a href="#eq-3">Equation&nbsp;<span>2.3</span></a> are the same, which confirms R code is correct. Next is to compute the time cost.</p>
+<p>From the plot and MAPE, <span class="math inline">\(\log({\bf s}({\bf Y}|{\text{nbd}}_+(\hat{\boldsymbol \gamma})))\)</span> computed by <a href="#eq-1">Equation&nbsp;<span class="quarto-unresolved-ref">eq-1</span></a> and <a href="#eq-3">Equation&nbsp;<span class="quarto-unresolved-ref">eq-3</span></a> are the same, which confirms R code is correct. Next is to compute the time cost.</p>
 </section>
 <section id="simulation-study" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> Simulation study</h1>
-<p>Note that <span class="math inline">\(\log(c_{\hat{\boldsymbol \gamma}}^+)\)</span> is a constant with respect to <span class="math inline">\(i\notin \hat{\boldsymbol \gamma}\)</span> in <a href="#eq-3">Equation&nbsp;<span>2.3</span></a>, we can ignore it and only compute <code>log.s.plus1.prop</code> to save time for the purpose of variable selection. We use R package <code>microbenchmark</code> to conduct the simulation study with the default replication 100 times.</p>
+<p>Note that <span class="math inline">\(\log(c_{\hat{\boldsymbol \gamma}}^+)\)</span> is a constant with respect to <span class="math inline">\(i\notin \hat{\boldsymbol \gamma}\)</span> in <a href="#eq-3">Equation&nbsp;<span class="quarto-unresolved-ref">eq-3</span></a>, we can ignore it and only compute <code>log.s.plus1.prop</code> to save time for the purpose of variable selection. We use R package <code>microbenchmark</code> to conduct the simulation study with the default replication 100 times.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(microbenchmark)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>timecost <span class="ot">&lt;-</span> <span class="fu">microbenchmark</span>(<span class="st">"for_loop"</span> <span class="ot">=</span> {</span>
